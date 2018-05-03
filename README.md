@@ -1,5 +1,4 @@
 # Advanced Share Plugin
-**EXPERIMENTAL**
 Share text and file your flutter app.
 
 #### Compatible
@@ -14,8 +13,16 @@ import 'package:advanced_share/advanced_share.dart';
 ```
 #### Methods
 ##### generic({String msg, String url, String title, String subject, String type})
+##### whatsapp({String msg, String url})
+##### gmail({String subject, String msg, String url})
+**Result values**
+| Value  | Result  |
+| ------------ | ------------ |
+| 0  | Failed  |
+| 1  | Success  |
+| 2  |  {App} isnt installed. |
+| 3  | dont know :smile:  |
 
-its required one of **msg** or **url** parameters.
 if you using share local file, **you need storage permissions**.
 
 ------------
@@ -25,16 +32,18 @@ if you using share local file, **you need storage permissions**.
 | :------------ | :------------ |
 | String msg  | Text message  |
 | String url  | Base64 file url or Local file url  |
-| String title  | Chooser title default "Share" (Optional)  |
-| String subject  | For example mail subject (Optional)  |
-| String type  | Intent type (Optional)  |
+| String title  | Chooser title default "Share" |
+| String subject  | For example mail subject  |
+| String type  | Intent type  |
 
 ###### Examples
 ``` dart
 AdvancedShare.generic(
     msg: "Its good.", 
     title: "Share with Advanced Share",
-  );
+  ).then((response){
+	print(response);
+});
 ```
 ``` dart
 String BASE64_IMAGE = "data:image/png;base64, ...";
@@ -43,11 +52,18 @@ AdvancedShare.generic(
     subject: "Flutter",
     title: "Share Image",
     url: BASE64_IMAGE
-);
+	).then((response){
+	print(response);
+	});
 ```
 ``` dart
 AdvancedShare.generic(
     url: "file:///storage/emulated/0/Download/test.txt"
 );
 ```
-
+``` dart
+    AdvancedShare.whatsapp(msg: "It's okay :)")
+	.then((response) {
+      handleResponse(response, appName: "Whatsapp");
+    });
+```

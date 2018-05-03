@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 class AdvancedShare {
@@ -8,10 +9,12 @@ class AdvancedShare {
 
   /// Required String msg or String url
   /// Default title: "Share"
-  static Future<void> generic({String msg, String url, String title, String subject, String type}) {
-    if (msg == null && url == null) {
-      throw ArgumentError("Required msg or url");
-    }
+  static Future<int> generic(
+      {String msg,
+      String url,
+      String title,
+      String subject,
+      String type}) async {
     final Map<String, dynamic> params = <String, dynamic>{
       'msg': msg,
       'url': url,
@@ -19,6 +22,35 @@ class AdvancedShare {
       'subject': subject,
       'type': type,
     };
-    return _channel.invokeMethod('share', params);
+    return await exec(params);
+  }
+
+  static Future<int> whatsapp({String msg, String url}) async {
+    final Map<String, dynamic> params = <String, dynamic>{
+      'msg': msg,
+      'url': url,
+      'direct': 'whatsapp'
+    };
+
+    return await exec(params);
+  }
+
+  static Future<int> gmail({String subject, String msg, String url}) async {
+    final Map<String, dynamic> params = <String, dynamic>{
+      'msg': msg,
+      'url': url,
+      'subject': subject,
+      'direct': 'gmail'
+    };
+    return await exec(params);
+  }
+
+  @protected
+  static Future<int> exec(params) async {
+    try {
+      return await _channel.invokeMethod('share', params);
+    } catch (e) {
+      return await Future<int>.value(0);
+    }
   }
 }

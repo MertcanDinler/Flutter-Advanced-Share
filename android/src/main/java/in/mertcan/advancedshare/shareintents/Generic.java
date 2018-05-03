@@ -12,9 +12,15 @@ public class Generic extends Base {
     }
 
     @Override
-    public void share(Map params) {
-        super.share(params);
-        openChooser();
+    public int share(Map params) {
+        try {
+            super.share(params);
+            openChooser();
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
+
     }
 
 }

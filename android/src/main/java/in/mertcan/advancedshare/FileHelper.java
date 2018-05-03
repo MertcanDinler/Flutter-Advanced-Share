@@ -124,8 +124,7 @@ public class FileHelper {
             }
         } else if (isLocalFile()) {
             Uri uri = Uri.parse(this.url);
-            Uri providerUri = FileProvider.getUriForFile(registrar.context(), authorities,
-                    new File(uri.getPath()));
+            Uri providerUri = FileProvider.getUriForFile(registrar.context(), authorities, new File(uri.getPath()));
             return providerUri;
         }
         return null;

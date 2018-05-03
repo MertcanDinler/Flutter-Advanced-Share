@@ -1,6 +1,6 @@
 name: advanced_share
-description: Flutter plugin for sharing
-version: 0.0.1
+description: Flutter plugin for sharing content and file via native ui for Android 
+version: 0.1.0
 author: Mertcan Dinler <mertdinlerin@gmail.com>
 homepage: https://github.com/mrtcndnlr/Flutter-Advanced-Share
 

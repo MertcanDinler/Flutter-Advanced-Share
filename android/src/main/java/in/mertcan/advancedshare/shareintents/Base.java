@@ -3,7 +3,6 @@ package in.mertcan.advancedshare.shareintents;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 import android.content.Intent;
-import android.net.Uri;
 
 import java.util.Map;
 
@@ -23,7 +22,7 @@ public abstract class Base {
         this.intent.setType("text/plain");
     }
 
-    public void share(Map params) {
+    public int share(Map params) {
         this.params = params;
         fileHelper = getFileHelper(params);
 
@@ -46,6 +45,7 @@ public abstract class Base {
                 intent.setType(fileHelper.getType());
             }
         }
+        return 0;
     }
 
     protected void openChooser() {

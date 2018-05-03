@@ -1,5 +1,7 @@
 .DS_Store
 .atom/
+.vscode/
+.idea/
 .dart_tool/
 .idea
 .packages
