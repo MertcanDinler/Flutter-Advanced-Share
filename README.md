@@ -16,8 +16,9 @@ import 'package:advanced_share/advanced_share.dart';
 ##### whatsapp({String msg, String url})
 ##### gmail({String subject, String msg, String url})
 **Result values**
+
 | Value  | Result  |
-| ------------ | ------------ |
+| :------------ | :------------ |
 | 0  | Failed  |
 | 1  | Success  |
 | 2  |  {App} isnt installed. |
