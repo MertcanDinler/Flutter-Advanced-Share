@@ -15,6 +15,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class FileHelper {
+    private static final String SHARED_PROVIDER_AUTHORITY = ".adv_provider";
+    private static final String SHARED_FOLDER= "shared";
     private final Registrar registrar;
     private final String authorities;
     private String url;
@@ -24,14 +26,14 @@ public class FileHelper {
 
     public FileHelper(Registrar registrar, String url) {
         this.registrar = registrar;
-        this.authorities = registrar.context().getPackageName() + ".adv_provider";
+        this.authorities = registrar.context().getPackageName() + SHARED_PROVIDER_AUTHORITY;
         this.url = url;
         this.uri = Uri.parse(this.url);
     }
 
     public FileHelper(Registrar registrar, String url, String type) {
         this.registrar = registrar;
-        this.authorities = registrar.context().getPackageName() + ".adv_provider";
+        this.authorities = registrar.context().getPackageName() + SHARED_PROVIDER_AUTHORITY;
         this.url = url;
         this.uri = Uri.parse(url);
         this.type = type;
@@ -106,19 +108,19 @@ public class FileHelper {
     public Uri getUri() {
         final MimeTypeMap mime = MimeTypeMap.getSingleton();
         extension = mime.getExtensionFromMimeType(getType());
-
         if (isBase64File()) {
-            final String tempPath = registrar.context().getCacheDir().getPath();
             final String prefix = "" + System.currentTimeMillis() / 1000;
             String encodedFile = uri.getSchemeSpecificPart()
                     .substring(uri.getSchemeSpecificPart().indexOf(";base64,") + 8);
             try {
-                File tempFile = new File(tempPath, prefix + "." + extension);
-                final FileOutputStream stream = new FileOutputStream(tempFile);
+                final File sharedFolder = new File(registrar.context().getFilesDir(), SHARED_FOLDER);
+                sharedFolder.mkdirs();
+                final File sharedFile = File.createTempFile(prefix, "." + extension, sharedFolder);
+                final FileOutputStream stream = new FileOutputStream(sharedFile);
                 stream.write(Base64.decode(encodedFile, Base64.DEFAULT));
                 stream.flush();
                 stream.close();
-                return FileProvider.getUriForFile(registrar.context(), authorities, tempFile);
+                return FileProvider.getUriForFile(registrar.context(), this.authorities, sharedFile);
             } catch (IOException e) {
                 e.printStackTrace();
             }
