@@ -33,7 +33,6 @@ public class AdvancedSharePlugin implements MethodCallHandler {
     final MethodChannel channel = new MethodChannel(registrar.messenger(), CHANNEL);
     AdvancedSharePlugin instance = new AdvancedSharePlugin(registrar);
     channel.setMethodCallHandler(instance);
-
   }
 
   @Override

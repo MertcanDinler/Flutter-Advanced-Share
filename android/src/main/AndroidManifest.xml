@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="in.mertcan.advancedshare">
   <application>
-          <provider
+        <!-- Define your provider -->
+        <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.adv_provider"
             android:exported="false"

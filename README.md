@@ -59,7 +59,7 @@ AdvancedShare.generic(
 ```
 ``` dart
 AdvancedShare.generic(
-    url: "file:///storage/emulated/0/Download/test.txt"
+    url: "content://{applicationId}.adv_provider/shared/myfile.jpg"
 );
 ```
 ``` dart

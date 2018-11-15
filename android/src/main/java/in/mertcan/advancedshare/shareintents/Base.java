@@ -1,11 +1,8 @@
 package in.mertcan.advancedshare.shareintents;
 
 import io.flutter.plugin.common.PluginRegistry.Registrar;
-
 import android.content.Intent;
-
 import java.util.Map;
-
 import in.mertcan.advancedshare.FileHelper;
 
 public abstract class Base {
@@ -21,33 +18,27 @@ public abstract class Base {
         this.intent.setAction(Intent.ACTION_SEND);
         this.intent.setType("text/plain");
     }
-
     public int share(Map params) {
         this.params = params;
         fileHelper = getFileHelper(params);
-
         if (checkKey("title")) {
             title = (String) params.get("title");
         }
-
         if (checkKey("msg")) {
             intent.putExtra(Intent.EXTRA_TEXT, (String) params.get("msg"));
         }
-
         if (checkKey("subject")) {
             intent.putExtra(Intent.EXTRA_SUBJECT, (String) params.get("subject"));
         }
-
         if (checkKey("url")) {
             if (fileHelper.isFile()) {
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent.putExtra(Intent.EXTRA_STREAM, fileHelper.getUri());
                 intent.setType(fileHelper.getType());
+                intent.putExtra(Intent.EXTRA_STREAM, fileHelper.getUri());
             }
         }
         return 0;
     }
-
     protected void openChooser() {
         Intent chooser = Intent.createChooser(intent, title);
         if (registrar.activity() == null) {
@@ -57,7 +48,6 @@ public abstract class Base {
             registrar.activity().startActivity(chooser);
         }
     }
-
     protected FileHelper getFileHelper(Map params) {
         String url = "";
         if (checkKey("url")) {
@@ -69,13 +59,10 @@ public abstract class Base {
             return new FileHelper(registrar, (String) url);
         }
     }
-
     public boolean checkKey(String key) {
         if (params != null && !params.isEmpty()) {
             return params.get(key) != null;
         }
-
         return false;
     }
-
 }
