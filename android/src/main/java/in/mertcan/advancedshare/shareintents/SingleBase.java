@@ -19,8 +19,7 @@ public abstract class SingleBase extends Base {
         super.share(params);
         if (getPackage() != null) {
             if (isPackageInstalled(getPackage(), registrar.context())) {
-                this.intent.setPackage(getPackage());
-                openChooser();
+                openSingleApplication(getPackage());
                 return 1;
             } else {
                 return 2;

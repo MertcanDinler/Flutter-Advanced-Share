@@ -109,7 +109,6 @@ public class FileHelper {
         final MimeTypeMap mime = MimeTypeMap.getSingleton();
         extension = mime.getExtensionFromMimeType(getType());
         if (isBase64File()) {
-            final String tempPath = registrar.context().getCacheDir().getPath();
             final String prefix = "" + System.currentTimeMillis() / 1000;
             String encodedFile = uri.getSchemeSpecificPart()
                     .substring(uri.getSchemeSpecificPart().indexOf(";base64,") + 8);
@@ -121,7 +120,7 @@ public class FileHelper {
                 stream.write(Base64.decode(encodedFile, Base64.DEFAULT));
                 stream.flush();
                 stream.close();
-                return FileProvider.getUriForFile(registrar.context(), authorities, sharedFile);
+                return FileProvider.getUriForFile(registrar.context(), this.authorities, sharedFile);
             } catch (IOException e) {
                 e.printStackTrace();
             }
