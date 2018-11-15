@@ -60,8 +60,9 @@ public abstract class Base {
         }
     }
     protected void openSingleApplication(String packageName) {
-        final Intent chooser = intentBuilder.createChooserIntent();
-        chooser.setPackage(packageName);
+        final Intent intent = intentBuilder.getIntent();
+        intent.setPackage(packageName);
+        Intent chooser = Intent.createChooser(intent, title);
         if (registrar.activity() == null) {
             chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             registrar.context().startActivity(chooser);
