@@ -23,12 +23,13 @@ public abstract class Base {
 
     public Base(Registrar registrar) {
         this.registrar = registrar;
-        this.intent = new Intent();
-        this.intent.setAction(Intent.ACTION_SEND);
-        this.intent.setType("text/plain");
     }
 
     public int share(Map params) {
+        this.intent = new Intent();
+        this.intent.setAction(Intent.ACTION_SEND);
+        this.intent.setType("text/plain");
+
         this.params = params;
         fileHelper = getFileHelper(params);
 
