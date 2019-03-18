@@ -1,3 +1,5 @@
+#### This repository is no longer maintained.
+
 # Advanced Share Plugin
 Share text and file your flutter app.
 
