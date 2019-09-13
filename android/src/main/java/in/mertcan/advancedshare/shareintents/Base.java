@@ -34,32 +34,32 @@ public abstract class Base {
         fileHelper = getFileHelper(params);
 
         if (checkKey("title")) {
-            title = (String) params.get("title");
-        }
-
-        if (checkKey("msg")) {
-            intent.putExtra(Intent.EXTRA_TEXT, (String) params.get("msg"));
-        }
-
-        if (checkKey("subject")) {
-            intent.putExtra(Intent.EXTRA_SUBJECT, (String) params.get("subject"));
-        }
-
-        if (checkKey("url")) {
-            if (fileHelper.isFile()) {
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent.putExtra(Intent.EXTRA_STREAM, fileHelper.getUri());
-                intent.setType(fileHelper.getType());
-
-                List<ResolveInfo> resInfoList = this.registrar.activity().getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-                for (ResolveInfo resolveInfo : resInfoList) {
-                    String packageName = resolveInfo.activityInfo.packageName;
-                    this.registrar.activity().grantUriPermission(packageName, fileHelper.getUri(), Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                }
-            }
-        }
-        return 0;
+        title = (String) params.get("title");
     }
+
+    if (checkKey("msg")) {
+        intent.putExtra(Intent.EXTRA_TEXT, (String) params.get("msg"));
+    }
+
+    if (checkKey("subject")) {
+        intent.putExtra(Intent.EXTRA_SUBJECT, (String) params.get("subject"));
+    }
+
+    if (checkKey("url")) {
+        if (fileHelper.isFile()) {
+            List<ResolveInfo> resInfoList = registrar.context().getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+            for (ResolveInfo resolveInfo : resInfoList) {
+                String packageName = resolveInfo.activityInfo.packageName;
+                registrar.context().grantUriPermission(packageName, fileHelper.getUri(), Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.putExtra(Intent.EXTRA_STREAM, fileHelper.getUri());
+            intent.setType(fileHelper.getType());
+        }
+    }
+    return 0;
+}
 
     protected void openChooser() {
         Intent chooser = Intent.createChooser(intent, title);
